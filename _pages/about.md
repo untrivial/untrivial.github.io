@@ -2,24 +2,22 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: <i>I once asked Russell if he was willing to die for his beliefs. “Of course not,” he replied. “After all, I may be wrong . . .”</i>
 
 profile:
   align: right
   image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image_circular: true # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>Philadelphia, PA</p>
 
 news: true # includes a list of news items
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
+selected_papers: false # includes a list of papers marked as "selected={true}"
+social: false # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I'm an engineer who wants to solve intelligence. My foremost interests are in AI safety, policy, and graph learning.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+I'm currently an undergraduate at the University of Pennsylvania studying CS and Finance under the [M&T Program](https://fisher.wharton.upenn.edu/). I'm a [2022 Atlas Fellow](https://www.atlasfellowship.org/) and a [2024 xAI hackathon winner](https://x.com/Diego__Pasini/status/1845998296990654582).
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+At Penn I organize [Safe AI @ Penn](https://pennai.notion.site/SafeAI-Penn-Labs-a4f262c3061b46d2975667c97b964ad3). I do contract data science work with [Wharton Analytics Fellows](https://ai-analytics.wharton.upenn.edu/for-students/wharton-analytics-fellows/), and I do research alongside [Machine Learning Research @ Penn](https://mlrpenn.vercel.app/).
