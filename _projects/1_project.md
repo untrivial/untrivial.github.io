@@ -1,7 +1,7 @@
 ---
 layout: page
 title: xAI Hackathon Project
-description: 𝕏 Grand Prize Project, "A Hitchhiker's Guide to X"
+description: 𝕏 Grand Prize Project, A Hitchhiker's Guide to X
 img: assets/img/xai.png
 importance: 1
 category: work
