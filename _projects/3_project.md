@@ -1,7 +1,7 @@
 ---
 layout: page
 title: AI safety via debate, OpenAI
-description: Replication of OpenAI's "AI safety via debate" paper
+description: Replication of OpenAI's AI safety via debate paper
 img: assets/img/OAISafetyDebateImg.png
 importance: 3
 category: work

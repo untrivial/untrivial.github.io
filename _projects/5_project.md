@@ -1,7 +1,7 @@
 ---
 layout: page
 title: HackMIT Puzzles, Top 10
-description: Live stargazing predictor, built at Yale's hackathon
+description: Solved six challenging puzzles 
 img:
 importance: 5
 category: work
