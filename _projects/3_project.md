@@ -17,4 +17,4 @@ category: work
 - *Data:* Built a custom sparse dataset where each MNIST image is randomly reduced to six non-black pixels.
 - *Judge:* Trained a convolutional neural network (CNN) to classify the sparse MNIST images and predict the digit.
 - *Agents:* Wrote a custom Monte Carlo Tree Search (MCTS) agent class that learns to play the knight-and-knave game optimally.
-- [Link to Python notebook]("https://github.com/untrivial/Safety-Via-Debate/blob/main/mnist-debate.ipynb")
+- [Link to Python notebook](https://github.com/untrivial/Safety-Via-Debate/blob/main/mnist-debate.ipynb)
