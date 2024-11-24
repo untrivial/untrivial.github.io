@@ -2,7 +2,7 @@
 layout: page
 permalink: /cv/
 title: cv
-description: Link to my blog.
+description: CV.
 nav: true
 nav_order: 3
 ---
