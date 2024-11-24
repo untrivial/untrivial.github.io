@@ -26,7 +26,7 @@ I previously led all RAG development at [pre.dev](https://pre.dev/) and worked o
 At Penn I organize [Safe AI @ Penn](https://pennai.notion.site/SafeAI-Penn-Labs-a4f262c3061b46d2975667c97b964ad3). I do contract data science work with [Wharton Analytics Fellows](https://ai-analytics.wharton.upenn.edu/for-students/wharton-analytics-fellows/), and I do research alongside [Machine Learning Research @ Penn](https://mlrpenn.vercel.app/).
 
 ### Contact Me
-If you'd like to get in touch, you can email me at [axchenster@gmail.com](mailto:axchenster@gmail.com) or DM/connect with me on LinkedIn. For meetings, my calendly is [here](https://calendly.com/axchenster); though I would prefer we get in contact first. I'm currently based in Philadelphia (in the US).
+If you'd like to get in touch, you can email me at *axchenster@gmail.com* or DM/connect with me on LinkedIn. For meetings, my calendly is [here](https://calendly.com/axchenster); though I would prefer we get in contact first. I'm currently based in Philadelphia (in the US).
 
 <div style="display: flex; gap: 25px; align-items: center;">
 
