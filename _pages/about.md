@@ -22,7 +22,7 @@ I'm an engineer who wants to solve intelligence. My foremost interests are in <b
 I'm an undergraduate at the University of Pennsylvania studying CS and Finance under the [M&T Program](https://fisher.wharton.upenn.edu/). I'm a [2022 Atlas Fellow](https://www.atlasfellowship.org/) and a [2024 xAI hackathon winner](https://x.com/Diego__Pasini/status/1845998296990654582).
 
 Some things I've done:
-- Led all RAG development at [pre.dev](https://pre.dev/)
+- Led RAG development at [pre.dev](https://pre.dev/)
 - Worked on credit modeling at [Reprise Financial](https://www.reprisefinancial.com/)
 - Managed growth and was a founding team member at [2.5 Intelligence](https://2.5.dev/)
 
