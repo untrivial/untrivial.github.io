@@ -31,7 +31,7 @@ At Penn I organize [Safe AI @ Penn](https://pennai.notion.site/SafeAI-Penn-Labs-
 #### Contact Me
 If you'd like to get in touch, you can email me at *axchenster@gmail.com* or DM/connect with me on [LinkedIn](https://www.linkedin.com/in/alexander-x-chen/). 
 
-For meetings, my calendly is [here](https://calendly.com/axchenster); though I would prefer we get in contact first.
+For meetings, my calendly is [here](https://calendly.com/alexander_chen); though I would prefer we get in contact first.
 
 <div style="display: flex; gap: 25px; align-items: center;">
 
