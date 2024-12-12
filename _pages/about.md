@@ -10,14 +10,16 @@ profile:
   image_circular: false # crops the image to make it circular
   more_info: >
     <i>axchenster@gmail.com</i>
-    <p>Philadelphia, PA</p>
+    <p>Palo Alto, CA</p>
 
 news: false # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page
 ---
 
-I'm an undergraduate at the University of Pennsylvania studying CS and Finance under the [M&T Program](https://fisher.wharton.upenn.edu/). I'm a [2022 Atlas Fellow](https://www.atlasfellowship.org/) and a [2024 xAI hackathon winner](https://x.com/Diego__Pasini/status/1845998296990654582).
+I'm a Member of Technical Staff at xAI. I was previously at the University of Pennsylvania studying CS and Finance under the [M&T Program](https://fisher.wharton.upenn.edu/). I live in SF but call Delaware home. I'm a [2022 Atlas Fellow](https://www.atlasfellowship.org/).
+
+##### Decision Theory \ Deep Learning \ Philosophy \ Violinist \ US-China
 
 #### About Me
 When I was young I did a ton of competition math, or rather my parents forced me to. But in high school I couldn't stop writing. Chinese consumer markets, Parfit's theory of personal identity, you name it. I'm obsessed with decision theory and philosophy.
@@ -26,14 +28,12 @@ At some point I discover computer programming. In 10th grade, I deliver my first
 
 I continue to think about decision making; I want to solve intelligence. Unlike Google, I don't want simply organize the world's information; I want to digest it and throw up beautiful insights. Deep learning seems like a good approach. I've picked up new interests, including defense policy and AAPI advocacy. One day, I want to lead in government and touch the lives of millions.
 
-##### Decision Theory \ Deep Learning \ Philosophy \ Violinist \ US-China
-
-Some things I've done:
+#### Some things I've done:
 - Led RAG development at [pre.dev](https://pre.dev/)
 - Worked on credit modeling at [Reprise Financial](https://www.reprisefinancial.com/)
 - Managed growth and was a founding team member at [2.5 Intelligence](https://2.5.dev/)
 
-At Penn I organize [Safe AI @ Penn](https://pennai.notion.site/SafeAI-Penn-Labs-a4f262c3061b46d2975667c97b964ad3).
+At Penn I organized [Safe AI @ Penn](https://pennai.notion.site/SafeAI-Penn-Labs-a4f262c3061b46d2975667c97b964ad3).
 
 #### Contact Me
 If you'd like to get in touch, you can email me at *axchenster@gmail.com* or DM/connect with me on [LinkedIn](https://www.linkedin.com/in/alexander-x-chen/). 
