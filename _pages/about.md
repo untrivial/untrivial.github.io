@@ -17,9 +17,10 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: false # includes social icons at the bottom of the page
 ---
 
-I'm a Member of Technical Staff at xAI. I was previously at the University of Pennsylvania studying CS and Finance under the [M&T Program](https://fisher.wharton.upenn.edu/). I live in SF but call Delaware home. I'm a [2022 Atlas Fellow](https://www.atlasfellowship.org/).
+I'm a Member of Technical Staff at xAI. I was previously at the University of Pennsylvania studying CS and Finance under the [M&T Program](https://fisher.wharton.upenn.edu/). I live in SF but call Delaware home. I'm a 2022 [Atlas Fellow](https://www.atlasfellowship.org/).
 
 ##### Decision Theory \ Deep Learning \ Philosophy \ Violinist \ US-China
+<br><br>
 
 #### About Me
 When I was young I did a ton of competition math, or rather my parents forced me to. But in high school I couldn't stop writing. Chinese consumer markets, Parfit's theory of personal identity, you name it. I'm obsessed with decision theory and philosophy.
