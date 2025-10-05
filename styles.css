@@ -524,10 +524,7 @@ body {
     }
     
     .number-panel {
-        width: 180px;
-        left: 1rem;
-        top: 1rem;
-        font-size: 0.85rem;
+        display: none; /* Hide number generator on mobile */
     }
     
     .hero {

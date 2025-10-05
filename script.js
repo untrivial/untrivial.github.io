@@ -300,6 +300,9 @@ function requestScrollTick() {
 
 window.addEventListener('scroll', requestScrollTick);
 
+// Mobile detection
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth <= 768;
+
 // Number generator
 const currentNumberEl = document.getElementById('current-number');
 const savedNumbersEl = document.getElementById('saved-numbers');
@@ -425,19 +428,25 @@ function updateCounters() {
     document.getElementById('legendary-count').textContent = rarityCounts.legendary;
 }
 
-// Initialize physics on load
+// Initialize physics on load (desktop only)
 window.addEventListener('load', () => {
-    setTimeout(initPhysics, 100);
+    if (!isMobile) {
+        setTimeout(initPhysics, 100);
+    }
 });
 
-// Panel toggle functionality
+// Panel toggle functionality (desktop only)
 document.addEventListener('DOMContentLoaded', () => {
-    const panel = document.querySelector('.number-panel');
-    const panelHeader = document.querySelector('.panel-header');
-    
-    panelHeader.addEventListener('click', () => {
-        panel.classList.toggle('collapsed');
-    });
+    if (!isMobile) {
+        const panel = document.querySelector('.number-panel');
+        const panelHeader = document.querySelector('.panel-header');
+        
+        if (panel && panelHeader) {
+            panelHeader.addEventListener('click', () => {
+                panel.classList.toggle('collapsed');
+            });
+        }
+    }
 });
 
 // Generate random 6-digit number
@@ -532,6 +541,9 @@ function saveNumber(number) {
     // Update counter (persistent)
     rarityCounts[rarityTier]++;
     updateCounters();
+    
+    // Increase generation speed based on rarity
+    updateGenerationSpeed(rarityTier);
     
     // Add to history
     numberHistory.push({
@@ -647,12 +659,26 @@ function exportData() {
 // Import function
 function importData(data) {
     // Add imported counters to existing counters (additive)
-    rarityCounts.common += data.counters.common || 0;
-    rarityCounts.uncommon += data.counters.uncommon || 0;
-    rarityCounts.rare += data.counters.rare || 0;
-    rarityCounts.epic += data.counters.epic || 0;
-    rarityCounts.legendary += data.counters.legendary || 0;
+    const importedCounts = {
+        common: data.counters.common || 0,
+        uncommon: data.counters.uncommon || 0,
+        rare: data.counters.rare || 0,
+        epic: data.counters.epic || 0,
+        legendary: data.counters.legendary || 0
+    };
+    
+    rarityCounts.common += importedCounts.common;
+    rarityCounts.uncommon += importedCounts.uncommon;
+    rarityCounts.rare += importedCounts.rare;
+    rarityCounts.epic += importedCounts.epic;
+    rarityCounts.legendary += importedCounts.legendary;
     updateCounters();
+    
+    // Add speed contributions from imported numbers
+    Object.keys(importedCounts).forEach(rarity => {
+        const count = importedCounts[rarity];
+        generationSpeed += speedContributions[rarity] * count;
+    });
     
     // Keep existing display and physics - we'll add to them
     
@@ -735,39 +761,82 @@ function importData(data) {
     });
 }
 
-// Set up export button
-document.getElementById('export-btn').addEventListener('click', exportData);
-
-// Set up import button
-document.getElementById('import-btn').addEventListener('click', () => {
-    document.getElementById('import-file').click();
-});
-
-document.getElementById('import-file').addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const data = JSON.parse(event.target.result);
-                importData(data);
-            } catch (err) {
-                console.error('Failed to import:', err);
-                alert('Invalid file format');
-            }
-        };
-        reader.readAsText(file);
+// Set up export/import buttons (desktop only)
+if (!isMobile) {
+    const exportBtn = document.getElementById('export-btn');
+    const importBtn = document.getElementById('import-btn');
+    const importFile = document.getElementById('import-file');
+    
+    if (exportBtn) {
+        exportBtn.addEventListener('click', exportData);
     }
-    // Reset file input
-    e.target.value = '';
-});
+    
+    if (importBtn && importFile) {
+        importBtn.addEventListener('click', () => {
+            importFile.click();
+        });
+        
+        importFile.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        importData(data);
+                    } catch (err) {
+                        console.error('Failed to import:', err);
+                        alert('Invalid file format');
+                    }
+                };
+                reader.readAsText(file);
+            }
+            // Reset file input
+            e.target.value = '';
+        });
+    }
+}
 
-// Generate numbers twice per second
-setInterval(() => {
+// Dynamic generation speed system
+let generationSpeed = 0; // Speed points accumulated from finds
+const baseInterval = 500; // Start at 500ms (2 per second)
+const minInterval = 10; // Maximum speed cap at 100 per second
+
+// Speed contributions per rarity (in speed points)
+const speedContributions = {
+    common: 0.5,
+    uncommon: 2,
+    rare: 5,
+    epic: 15,
+    legendary: 50
+};
+
+function calculateInterval() {
+    // Each speed point reduces interval by 0.5ms
+    const reduction = generationSpeed * 0.5;
+    return Math.max(minInterval, baseInterval - reduction);
+}
+
+function updateGenerationSpeed(rarity) {
+    generationSpeed += speedContributions[rarity];
+}
+
+// Number generation loop with dynamic speed
+let generationTimeout;
+function generateLoop() {
     const number = generateNumber();
     currentNumberEl.textContent = number;
     
     if (isInteresting(number)) {
         saveNumber(number);
     }
-}, 500); // 500ms = twice per second
+    
+    // Schedule next generation with current speed
+    const interval = calculateInterval();
+    generationTimeout = setTimeout(generateLoop, interval);
+}
+
+// Start the generation loop (desktop only)
+if (!isMobile) {
+    generateLoop();
+}
