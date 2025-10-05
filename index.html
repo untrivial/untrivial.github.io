@@ -4,19 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>untrivial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body></body>
-    <div style="display: flex; flex-direction: column; align-items: flex-start; max-width: 800px; margin: 0 auto; gap: 2rem; padding: 4rem 0;">
-        <section>
-            <h2 style="font-size: 2.2rem; margin-bottom: 0;">untrivial</h2>
-            <p style="font-size: 1.2rem;">Alex Chen</p>
-            <i>Socrates, I do not even know what it means to know...</i>
-            <br><br>
-            <br><br>
-            <p>Building intelligence at xAI.</p>
-            <p>I love making <a href="https://x.com/gork" target="_blank">funny things</a>!</p>
-            Feel free to reach out to me <a href="https://x.com/chentropic" target="_blank">@chentropic</a>
-        </section>
-            
+<body>
+    <!-- Background elements -->
+    <div class="geometric-bg">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    
+    <!-- Corner name -->
+    <div class="corner-name">
+        <div class="brand">untrivial</div>
+        <div>Alex Chen</div>
+    </div>
+    
+    <!-- Hero centerpiece -->
+    <section class="hero">
+        <h1 class="quote-main" id="main-quote">All I know is that I know nothing</h1>
+        <p class="attribution">— Socrates</p>
+        <p class="response" id="response-text">But Socrates, I don't even know what it means to know...</p>
+        <div class="scroll-indicator">scroll to reveal ↓</div>
+    </section>
+    
+    <!-- Spacer to allow scroll animation to complete -->
+    <div style="height: 150vh;"></div>
+    
+    <!-- Main content below -->
+    <main class="main-content">
+        <p>Building intelligence at xAI.</p>
+        <p>I love making <a href="https://x.com/gork" target="_blank">funny things</a>!</p>
+        <p>Feel free to reach out to me <a href="https://x.com/chentropic" target="_blank">@chentropic</a></p>
+    </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
