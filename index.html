@@ -33,18 +33,20 @@
             <span class="panel-toggle">◀</span>
         </div>
         <div class="panel-content">
+        <div class="panel-controls">
+            <button class="control-btn" id="export-btn">export</button>
+            <button class="control-btn" id="import-btn">import</button>
+        </div>
         <div class="rarity-counters">
             <span class="counter common-counter" id="common-count">0</span>
             <span class="counter uncommon-counter" id="uncommon-count">0</span>
             <span class="counter rare-counter" id="rare-count">0</span>
             <span class="counter epic-counter" id="epic-count">0</span>
             <span class="counter legendary-counter" id="legendary-count">0</span>
-        </div>
-        <div class="panel-controls">
-            <button class="control-btn" id="export-btn">export</button>
-            <button class="control-btn" id="import-btn">import</button>
+            <span class="counter mythic-counter" id="mythic-count">0</span>
         </div>
         <input type="file" id="import-file" accept=".json" style="display: none;">
+        <div class="generation-rate" id="generation-rate">0/sec</div>
         <div class="current-number" id="current-number">------</div>
         <div class="physics-container" id="physics-container">
             <canvas id="physics-canvas"></canvas>

@@ -314,7 +314,8 @@ const rarityCounts = {
     uncommon: 0,
     rare: 0,
     epic: 0,
-    legendary: 0
+    legendary: 0,
+    mythic: 0
 };
 
 // History of all generated interesting numbers
@@ -322,10 +323,11 @@ const numberHistory = [];
 
 // Track saved numbers
 const savedNumbersList = [];
-const MAX_NUMBERS = 500;
+// No limit on total numbers
 
 // Rarity priority for sorting (higher = higher priority, shows at top)
 const rarityPriority = {
+    mythic: 6,
     legendary: 5,
     epic: 4,
     rare: 3,
@@ -339,7 +341,8 @@ const decayTimes = {
     uncommon: 40000,  
     rare: 60000,  
     epic: 180000,  
-    legendary: 600000 
+    legendary: 600000,
+    mythic: 1200000  // 20 minutes
 };
 
 // Effect pools for random selection
@@ -373,6 +376,13 @@ const effectPools = {
         colors: ['effect-rainbow'],
         shadows: ['shadow-glow'],
         animations: ['anim-shake', 'anim-pulse', 'anim-glitch', 'anim-wiggle', 'anim-spin', 'anim-blink']
+    },
+    mythic: {
+        // Mythic uses special per-digit rendering
+        styles: [],
+        colors: [],
+        shadows: [],
+        animations: []
     }
 };
 
@@ -382,6 +392,45 @@ function randomSelect(arr, count) {
     return shuffled.slice(0, count);
 }
 
+// Special rendering for mythic numbers
+function renderMythicNumber(container, number) {
+    const fonts = ['Courier', 'monospace', 'serif', 'sans-serif', 'cursive', 'fantasy'];
+    const colors = ['#ff0088', '#00ff88', '#8800ff', '#ff8800', '#00ffff', '#ffff00', '#ff0000'];
+    const transforms = ['', 'scaleY(1.3)', 'scaleX(1.2)', 'rotate(5deg)', 'rotate(-5deg)', 'skewX(10deg)'];
+    const weights = ['normal', 'bold', '900', '300', '600'];
+    const animations = ['anim-pulse', 'anim-shake', 'anim-wiggle', 'anim-glitch', 'anim-spin'];
+    
+    number.split('').forEach((digit, index) => {
+        const span = document.createElement('span');
+        span.textContent = digit;
+        span.className = 'mythic-digit';
+        span.style.fontFamily = fonts[Math.floor(Math.random() * fonts.length)];
+        span.style.color = colors[Math.floor(Math.random() * colors.length)];
+        span.style.transform = transforms[Math.floor(Math.random() * transforms.length)];
+        span.style.fontWeight = weights[Math.floor(Math.random() * weights.length)];
+        span.style.display = 'inline-block';
+        
+        // Add random animation classes
+        if (Math.random() > 0.4) {
+            const anim = animations[Math.floor(Math.random() * animations.length)];
+            span.classList.add(anim);
+        }
+        
+        // Random blinking for each digit
+        if (Math.random() > 0.5) {
+            const blinkAnim = `blink-digit-${Math.floor(Math.random() * 3)} ${0.8 + Math.random() * 1.5}s ease-in-out infinite`;
+            span.style.animation = span.style.animation ? `${span.style.animation}, ${blinkAnim}` : blinkAnim;
+        }
+        
+        // Random text effects
+        if (Math.random() > 0.5) {
+            span.style.textShadow = `0 0 ${3 + Math.random() * 7}px currentColor`;
+        }
+        
+        container.appendChild(span);
+    });
+}
+
 // Update rarity counter displays
 function updateCounters() {
     document.getElementById('common-count').textContent = rarityCounts.common;
@@ -389,6 +438,7 @@ function updateCounters() {
     document.getElementById('rare-count').textContent = rarityCounts.rare;
     document.getElementById('epic-count').textContent = rarityCounts.epic;
     document.getElementById('legendary-count').textContent = rarityCounts.legendary;
+    document.getElementById('mythic-count').textContent = rarityCounts.mythic;
 }
 
 // No physics initialization needed
@@ -427,6 +477,16 @@ function calculateRarity(numStr) {
     const uniqueDigits = Object.keys(digitCounts).length;
     const maxCount = Math.max(...counts);
     
+    // Check for MYTHIC patterns first
+    const isStrictIncreasing = digits.every((d, i) => i === 0 || parseInt(d) === parseInt(digits[i-1]) + 1);
+    const isStrictDecreasing = digits.every((d, i) => i === 0 || parseInt(d) === parseInt(digits[i-1]) - 1);
+    
+    // Pure consecutive ascending or descending (MYTHIC)
+    if (isStrictIncreasing || isStrictDecreasing) return 500;
+    
+    // All same digit (MYTHIC) - 111111, 222222, etc.
+    if (uniqueDigits === 1) return 500;
+    
     // All same digit (legendary) - 123456
     if (maxCount === 6) rarity += 100;
     
@@ -435,9 +495,6 @@ function calculateRarity(numStr) {
     
     // 4 same digits (rare) - 111123
     if (maxCount === 4) rarity += 20;
-    
-    // Only 1 unique digit (legendary)
-    if (uniqueDigits === 1) rarity += 100;
     
     // Only 2 unique digits (epic)
     if (uniqueDigits === 2) rarity += 30;
@@ -448,14 +505,9 @@ function calculateRarity(numStr) {
     // Check for patterns
     const isIncreasing = digits.every((d, i) => i === 0 || parseInt(d) >= parseInt(digits[i-1]));
     const isDecreasing = digits.every((d, i) => i === 0 || parseInt(d) <= parseInt(digits[i-1]));
-    const isStrictIncreasing = digits.every((d, i) => i === 0 || parseInt(d) > parseInt(digits[i-1]));
-    const isStrictDecreasing = digits.every((d, i) => i === 0 || parseInt(d) < parseInt(digits[i-1]));
     
     // Perfect sequences (legendary)
     if (numStr === '123456' || numStr === '654321') rarity += 150;
-    
-    // Strict monotonic (epic)
-    if (isStrictIncreasing || isStrictDecreasing) rarity += 40;
     
     // Monotonic with repeats (rare)
     if (isIncreasing || isDecreasing) rarity += 15;
@@ -477,20 +529,13 @@ function isInteresting(numStr) {
 
 // Add number to saved list with rarity styling and decay
 function saveNumber(number) {
-    // Check limit
-    if (savedNumbersList.length >= MAX_NUMBERS) {
-        // Remove oldest
-        const oldest = savedNumbersList.shift();
-        if (oldest.element) oldest.element.remove();
-        if (oldest.decayInterval) clearInterval(oldest.decayInterval);
-    }
-    
     const numberDiv = document.createElement('div');
     const rarityScore = calculateRarity(number);
     
     // Determine rarity tier
     let rarityTier;
-    if (rarityScore >= 100) rarityTier = 'legendary';
+    if (rarityScore >= 500) rarityTier = 'mythic';
+    else if (rarityScore >= 100) rarityTier = 'legendary';
     else if (rarityScore >= 50) rarityTier = 'epic';
     else if (rarityScore >= 30) rarityTier = 'rare';
     else if (rarityScore >= 15) rarityTier = 'uncommon';
@@ -512,16 +557,23 @@ function saveNumber(number) {
     
     // Base class
     numberDiv.className = 'saved-number';
-    numberDiv.textContent = number;
     
-    // Apply random effects from the pool
+    // Special rendering for mythic tier
+    if (rarityTier === 'mythic') {
+        renderMythicNumber(numberDiv, number);
+    } else {
+        numberDiv.textContent = number;
+    }
+    
+    // Apply random effects from the pool (skip for mythic as it has custom rendering)
     const pool = effectPools[rarityTier];
     const effectCount = {
         common: 1,
         uncommon: 2,
         rare: 3,
         epic: 4,
-        legendary: 5
+        legendary: 5,
+        mythic: 0
     }[rarityTier];
     
     // Add random styles
@@ -605,7 +657,14 @@ function saveNumber(number) {
 // Export function
 function exportData() {
     const data = {
-        counters: rarityCounts,
+        counters: {
+            common: rarityCounts.common,
+            uncommon: rarityCounts.uncommon,
+            rare: rarityCounts.rare,
+            epic: rarityCounts.epic,
+            legendary: rarityCounts.legendary,
+            mythic: rarityCounts.mythic
+        },
         history: numberHistory,
         exportDate: new Date().toISOString()
     };
@@ -619,55 +678,88 @@ function exportData() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    
+    // Clear the pile to prevent duping on import
+    savedNumbersList.forEach(({ element, decayInterval }) => {
+        if (element) element.remove();
+        if (decayInterval) clearInterval(decayInterval);
+    });
+    savedNumbersList.length = 0;
 }
 
 // Import function
 function importData(data) {
-    // Add imported counters to existing counters (additive)
+    // Recalculate everything fresh from just the numbers
     const importedCounts = {
-        common: data.counters.common || 0,
-        uncommon: data.counters.uncommon || 0,
-        rare: data.counters.rare || 0,
-        epic: data.counters.epic || 0,
-        legendary: data.counters.legendary || 0
+        common: 0,
+        uncommon: 0,
+        rare: 0,
+        epic: 0,
+        legendary: 0,
+        mythic: 0
     };
     
+    // Recalculate rarity for every number
+    const recalculatedHistory = data.history.map(item => {
+        const rarityScore = calculateRarity(item.number);
+        let rarityTier;
+        if (rarityScore >= 500) rarityTier = 'mythic';
+        else if (rarityScore >= 100) rarityTier = 'legendary';
+        else if (rarityScore >= 50) rarityTier = 'epic';
+        else if (rarityScore >= 30) rarityTier = 'rare';
+        else if (rarityScore >= 15) rarityTier = 'uncommon';
+        else rarityTier = 'common';
+        
+        // Count it
+        importedCounts[rarityTier]++;
+        
+        return {
+            number: item.number,
+            rarity: rarityTier,
+            timestamp: item.timestamp
+        };
+    });
+    
+    // Add to existing counters
     rarityCounts.common += importedCounts.common;
     rarityCounts.uncommon += importedCounts.uncommon;
     rarityCounts.rare += importedCounts.rare;
     rarityCounts.epic += importedCounts.epic;
     rarityCounts.legendary += importedCounts.legendary;
+    rarityCounts.mythic += importedCounts.mythic;
     updateCounters();
     
-    // Add speed contributions from imported numbers
+    // Calculate speed from recalculated counts
     Object.keys(importedCounts).forEach(rarity => {
-        const count = importedCounts[rarity];
-        generationSpeed += speedContributions[rarity] * count;
+        generationSpeed += speedContributions[rarity] * importedCounts[rarity];
     });
+    updateGenerationRate();
     
     // Keep existing display - we'll add to them
     
-    // Filter for rare, epic, or legendary
-    const displayNumbers = data.history
-        .filter(item => ['rare', 'epic', 'legendary'].includes(item.rarity))
-        .slice(-50); // Get last 50
+    // Prioritize mythics - show ALL mythics first, then fill in with other rarities
+    const mythics = recalculatedHistory.filter(item => item.rarity === 'mythic');
+    const otherRares = recalculatedHistory
+        .filter(item => ['legendary', 'epic', 'rare'].includes(item.rarity))
+        .slice(-1000);
+    
+    const displayNumbers = [...mythics, ...otherRares].slice(0, 1000); // Show up to 1000 total
     
     // Display them without decay
     displayNumbers.forEach((item, index) => {
-        // Check limit and remove oldest if needed
-        if (savedNumbersList.length >= MAX_NUMBERS) {
-            const oldest = savedNumbersList.shift();
-            if (oldest.element) oldest.element.remove();
-            if (oldest.decayInterval) clearInterval(oldest.decayInterval);
-        }
-        
         const numberDiv = document.createElement('div');
         numberDiv.className = 'saved-number';
-        numberDiv.textContent = item.number;
+        
+        // Special rendering for mythic tier
+        if (item.rarity === 'mythic') {
+            renderMythicNumber(numberDiv, item.number);
+        } else {
+            numberDiv.textContent = item.number;
+        }
         
         // Apply effects based on rarity
         const pool = effectPools[item.rarity];
-        const effectCount = { rare: 3, epic: 4, legendary: 5 }[item.rarity];
+        const effectCount = { rare: 3, epic: 4, legendary: 5, mythic: 0 }[item.rarity];
         
         // Add random styles
         if (pool.styles.length > 0) {
@@ -726,8 +818,8 @@ function importData(data) {
         savedNumbersList.splice(insertIndex, 0, savedObj);
     });
     
-    // Add imported numbers to history
-    data.history.forEach(item => {
+    // Add imported numbers to history (with recalculated rarities)
+    recalculatedHistory.forEach(item => {
         if (!numberHistory.find(h => h.number === item.number && h.timestamp === item.timestamp)) {
             numberHistory.push(item);
         }
@@ -773,25 +865,38 @@ if (!isMobile) {
 // Dynamic generation speed system
 let generationSpeed = 0; // Speed points accumulated from finds
 const baseInterval = 500; // Start at 500ms (2 per second)
-const minInterval = 10; // Maximum speed cap at 100 per second
+const minInterval = 0.1; // Maximum speed cap at 10000 per second
 
-// Speed contributions per rarity (in speed points)
+// Speed contributions per rarity (in speed points, slowed down)
 const speedContributions = {
-    common: 0.5,
-    uncommon: 2,
-    rare: 5,
-    epic: 15,
-    legendary: 50
+    common: 0.05,
+    uncommon: 0.2,
+    rare: 0.5,
+    epic: 2.5,
+    legendary: 7,
+    mythic: 30
 };
 
 function calculateInterval() {
-    // Each speed point reduces interval by 0.5ms
-    const reduction = generationSpeed * 0.5;
-    return Math.max(minInterval, baseInterval - reduction);
+    // Exponential speed scaling for more dramatic effect
+    // Speed points reduce interval multiplicatively
+    const speedMultiplier = 1 + (generationSpeed / 10); // Each 10 speed points = 2x speed
+    const interval = baseInterval / speedMultiplier;
+    return Math.max(minInterval, interval);
+}
+
+function updateGenerationRate() {
+    const interval = calculateInterval();
+    const perSecond = (1000 / interval).toFixed(1);
+    const rateEl = document.getElementById('generation-rate');
+    if (rateEl) {
+        rateEl.textContent = `${perSecond}/sec`;
+    }
 }
 
 function updateGenerationSpeed(rarity) {
     generationSpeed += speedContributions[rarity];
+    updateGenerationRate();
 }
 
 // Number generation loop with dynamic speed
@@ -811,5 +916,6 @@ function generateLoop() {
 
 // Start the generation loop (desktop only)
 if (!isMobile) {
+    updateGenerationRate(); // Initialize display
     generateLoop();
 }

@@ -116,15 +116,16 @@ body {
 
 .rarity-counters {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.25rem;
     justify-content: center;
     margin-bottom: 0.8rem;
+    flex-wrap: wrap;
 }
 
 .counter {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     font-weight: normal;
-    padding: 0.2rem 0.4rem;
+    padding: 0.1rem 0.25rem;
     color: #666;
 }
 
@@ -152,7 +153,9 @@ body {
     display: flex;
     gap: 1rem;
     justify-content: center;
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #333;
 }
 
 .control-btn {
@@ -174,6 +177,14 @@ body {
 
 .control-btn:active {
     color: #aaa;
+}
+
+.generation-rate {
+    font-size: 0.65rem;
+    color: #666;
+    margin-bottom: 0.3rem;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
 }
 
 .current-number {
