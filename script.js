@@ -685,6 +685,10 @@ function exportData() {
         if (decayInterval) clearInterval(decayInterval);
     });
     savedNumbersList.length = 0;
+    
+    // Reset generation speed to base rate (2/sec)
+    generationSpeed = 0;
+    updateGenerationRate();
 }
 
 // Import function
