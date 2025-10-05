@@ -14,6 +14,324 @@ body {
     min-height: 100vh;
 }
 
+/* Trailing arrow cursor */
+.arrow-cursor {
+    position: fixed;
+    font-size: 2rem;
+    color: #00ff00;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.2s;
+    opacity: 0;
+}
+
+/* Number generator panel */
+.number-panel {
+    position: fixed;
+    left: 2rem;
+    top: 2rem;
+    width: 220px;
+    max-height: 80vh;
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #333;
+    padding: 1rem;
+    z-index: 100;
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+}
+
+.number-panel.collapsed {
+    width: auto;
+    padding: 0.5rem;
+}
+
+.number-panel.collapsed .panel-content {
+    display: none;
+}
+
+.number-panel.collapsed .panel-header {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.physics-container {
+    position: relative;
+    flex: 1;
+    min-height: 300px;
+    max-height: calc(80vh - 200px);
+    overflow: hidden;
+}
+
+#physics-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    display: none;
+}
+
+.panel-header {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: lowercase;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #333;
+    padding-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.panel-header:hover {
+    color: #888;
+}
+
+.panel-toggle {
+    font-size: 0.8rem;
+    color: #666;
+    transition: transform 0.3s ease, color 0.2s;
+    flex-shrink: 0;
+}
+
+.panel-header:hover .panel-toggle {
+    color: #999;
+}
+
+.number-panel.collapsed .panel-toggle {
+    transform: rotate(180deg);
+}
+
+.panel-header-text {
+    transition: opacity 0.2s ease, width 0.2s ease;
+}
+
+.number-panel.collapsed .panel-header-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+}
+
+.rarity-counters {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+}
+
+.counter {
+    font-size: 0.9rem;
+    font-weight: normal;
+    padding: 0.2rem 0.4rem;
+    color: #666;
+}
+
+.common-counter {
+    color: #555;
+}
+
+.uncommon-counter {
+    color: #666;
+}
+
+.rare-counter {
+    color: #777;
+}
+
+.epic-counter {
+    color: #888;
+}
+
+.legendary-counter {
+    color: #999;
+}
+
+.panel-controls {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 0.8rem;
+}
+
+.control-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0;
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+    text-transform: lowercase;
+}
+
+.control-btn:hover {
+    color: #999;
+}
+
+.control-btn:active {
+    color: #aaa;
+}
+
+.current-number {
+    font-size: 1.2rem;
+    color: #eaeaea;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+}
+
+.saved-numbers {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 0.65rem;
+    color: #999;
+}
+
+.saved-number {
+    position: absolute;
+    color: #888;
+    transition: opacity 0.5s linear;
+    white-space: nowrap;
+    user-select: none;
+    pointer-events: auto;
+}
+
+.saved-number:hover {
+    color: #00ff00 !important;
+}
+
+/* Effect classes that can be combined */
+.effect-bold { font-weight: bold; }
+.effect-italic { font-style: italic; }
+.effect-underline { text-decoration: underline; }
+.effect-overline { text-decoration: overline; }
+.effect-strikethrough { text-decoration: line-through; }
+.effect-large { font-size: 0.75rem; }
+.effect-xlarge { font-size: 0.85rem; }
+.effect-xxlarge { font-size: 1rem; }
+.effect-small { font-size: 0.6rem; }
+
+/* Color effects */
+.color-blue { color: #4a9eff; }
+.color-purple { color: #b84aff; }
+.color-green { color: #00ff88; }
+.color-cyan { color: #00ffff; }
+.color-pink { color: #ff4a9e; }
+.color-orange { color: #ff884a; }
+.color-yellow { color: #ffff4a; }
+
+/* Shadow effects */
+.shadow-glow { text-shadow: 0 0 10px currentColor; }
+.shadow-strong { text-shadow: 2px 2px 6px currentColor; }
+.shadow-outline { text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333; }
+
+/* Animation effects */
+.anim-glitch { animation: glitch 3s infinite; }
+.anim-shake { animation: shake 0.5s infinite; }
+.anim-pulse { animation: pulse-scale 2s ease-in-out infinite; }
+.anim-wave { animation: wave 3s ease-in-out infinite; }
+.anim-spin { animation: spin-slow 10s linear infinite; }
+.anim-bounce { animation: bounce-subtle 1s ease-in-out infinite; }
+.anim-wiggle { animation: wiggle 2s ease-in-out infinite; }
+.anim-float { animation: float 3s ease-in-out infinite; }
+
+/* Rainbow gradient */
+.effect-rainbow {
+    background: linear-gradient(90deg, 
+        #ff0000 0%, #ff7f00 16.66%, #ffff00 33.33%, 
+        #00ff00 50%, #0000ff 66.66%, #8b00ff 83.33%, #ff0000 100%
+    );
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 3s linear infinite;
+}
+
+/* Glitch effect */
+@keyframes glitch {
+    0%, 90%, 100% {
+        transform: translate(0);
+        text-shadow: 2px 2px 4px rgba(184, 74, 255, 0.5);
+    }
+    92% {
+        transform: translate(-2px, 2px);
+        text-shadow: -2px -2px 4px rgba(184, 74, 255, 0.8);
+    }
+    94% {
+        transform: translate(2px, -2px);
+        text-shadow: 2px -2px 4px rgba(184, 74, 255, 0.8);
+    }
+    96% {
+        transform: translate(-2px, -2px);
+        text-shadow: -2px 2px 4px rgba(184, 74, 255, 0.8);
+    }
+}
+
+/* Rainbow animation */
+@keyframes rainbow {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 200% 50%;
+    }
+}
+
+/* Shake animation */
+@keyframes shake {
+    0%, 100% { transform: translateX(0) rotate(0deg); }
+    25% { transform: translateX(-1px) rotate(-0.5deg); }
+    75% { transform: translateX(1px) rotate(0.5deg); }
+}
+
+/* Pulse scale */
+@keyframes pulse-scale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* Wave */
+@keyframes wave {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Spin slow */
+@keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Bounce subtle */
+@keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+/* Wiggle */
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
+}
+
+/* Float */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-2px) translateX(2px); }
+    66% { transform: translateY(2px) translateX(-2px); }
+}
+
+
 /* Corner name placement */
 .corner-name {
     position: fixed;
@@ -28,8 +346,14 @@ body {
 }
 
 .corner-name .brand {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: #999999;
+    margin-bottom: 0.2rem;
+}
+
+.corner-name .version {
+    font-size: 0.9rem;
+    color: #892727;
     margin-bottom: 0.2rem;
 }
 
@@ -197,6 +521,13 @@ body {
         top: 1.5rem;
         right: 1.5rem;
         font-size: 0.9rem;
+    }
+    
+    .number-panel {
+        width: 180px;
+        left: 1rem;
+        top: 1rem;
+        font-size: 0.85rem;
     }
     
     .hero {

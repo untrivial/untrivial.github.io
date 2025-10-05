@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>untrivial</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -22,6 +23,34 @@
     <div class="corner-name">
         <div class="brand">untrivial</div>
         <div>Alex Chen</div>
+        <div class="version">v0.0.1</div>
+    </div>
+    
+    <!-- Number generator panel -->
+    <div class="number-panel">
+        <div class="panel-header">
+            <span class="panel-header-text">interesting numbers</span>
+            <span class="panel-toggle">◀</span>
+        </div>
+        <div class="panel-content">
+        <div class="rarity-counters">
+            <span class="counter common-counter" id="common-count">0</span>
+            <span class="counter uncommon-counter" id="uncommon-count">0</span>
+            <span class="counter rare-counter" id="rare-count">0</span>
+            <span class="counter epic-counter" id="epic-count">0</span>
+            <span class="counter legendary-counter" id="legendary-count">0</span>
+        </div>
+        <div class="panel-controls">
+            <button class="control-btn" id="export-btn">export</button>
+            <button class="control-btn" id="import-btn">import</button>
+        </div>
+        <input type="file" id="import-file" accept=".json" style="display: none;">
+        <div class="current-number" id="current-number">------</div>
+        <div class="physics-container" id="physics-container">
+            <canvas id="physics-canvas"></canvas>
+            <div class="saved-numbers" id="saved-numbers"></div>
+        </div>
+        </div>
     </div>
     
     <!-- Hero centerpiece -->
