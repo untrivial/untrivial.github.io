@@ -320,22 +320,26 @@ const rarityCounts = {
 // History of all generated interesting numbers
 const numberHistory = [];
 
-// Physics engine setup
-const { Engine, Render, World, Bodies, Runner, Body } = Matter;
-const engine = Engine.create();
-engine.world.gravity.y = 0.5; // Gentle gravity
-
-// Track physics bodies and their DOM elements
-const physicsBodies = [];
+// Track saved numbers
+const savedNumbersList = [];
 const MAX_NUMBERS = 500;
 
-// Decay times in milliseconds
+// Rarity priority for sorting (higher = higher priority, shows at top)
+const rarityPriority = {
+    legendary: 5,
+    epic: 4,
+    rare: 3,
+    uncommon: 2,
+    common: 1
+};
+
+// Decay times in milliseconds (faster for rare+)
 const decayTimes = {
     common: 10000,   
     uncommon: 40000,  
-    rare: 120000,   
-    epic: 400000, 
-    legendary: 3200000   
+    rare: 60000,  
+    epic: 180000,  
+    legendary: 600000 
 };
 
 // Effect pools for random selection
@@ -362,13 +366,13 @@ const effectPools = {
         styles: ['effect-bold', 'effect-xlarge', 'effect-underline', 'effect-overline'],
         colors: ['color-purple', 'color-pink', 'color-cyan', 'color-orange'],
         shadows: ['shadow-glow', 'shadow-strong'],
-        animations: ['anim-glitch', 'anim-shake', 'anim-pulse', 'anim-wiggle', 'anim-float']
+        animations: ['anim-glitch', 'anim-shake', 'anim-pulse', 'anim-wiggle', 'anim-float', 'anim-blink']
     },
     legendary: {
-        styles: ['effect-bold', 'effect-xxlarge'],
+        styles: ['effect-bold', 'effect-xlarge'],
         colors: ['effect-rainbow'],
-        shadows: ['shadow-glow', 'shadow-outline'],
-        animations: ['anim-shake', 'anim-pulse', 'anim-glitch', 'anim-wiggle', 'anim-spin']
+        shadows: ['shadow-glow'],
+        animations: ['anim-shake', 'anim-pulse', 'anim-glitch', 'anim-wiggle', 'anim-spin', 'anim-blink']
     }
 };
 
@@ -376,47 +380,6 @@ const effectPools = {
 function randomSelect(arr, count) {
     const shuffled = [...arr].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, count);
-}
-
-// Initialize physics world
-function initPhysics() {
-    const containerWidth = physicsContainer.clientWidth;
-    const containerHeight = physicsContainer.clientHeight;
-    
-    // Create walls - positioned AT the boundaries, not beyond
-    const wallThickness = 50;
-    const ground = Bodies.rectangle(
-        containerWidth / 2, containerHeight - wallThickness / 2,
-        containerWidth, wallThickness,
-        { isStatic: true }
-    );
-    const leftWall = Bodies.rectangle(
-        wallThickness / 2, containerHeight / 2,
-        wallThickness, containerHeight * 2,
-        { isStatic: true }
-    );
-    const rightWall = Bodies.rectangle(
-        containerWidth - wallThickness / 2, containerHeight / 2,
-        wallThickness, containerHeight * 2,
-        { isStatic: true }
-    );
-    
-    World.add(engine.world, [ground, leftWall, rightWall]);
-    
-    // Run the engine
-    const runner = Runner.create();
-    Runner.run(runner, engine);
-    
-    // Update DOM positions on each physics tick
-    Matter.Events.on(engine, 'afterUpdate', () => {
-        physicsBodies.forEach(({ body, element }) => {
-            if (element && element.parentNode) {
-                element.style.left = `${body.position.x}px`;
-                element.style.top = `${body.position.y}px`;
-                element.style.transform = `translate(-50%, -50%) rotate(${body.angle}rad)`;
-            }
-        });
-    });
 }
 
 // Update rarity counter displays
@@ -428,12 +391,7 @@ function updateCounters() {
     document.getElementById('legendary-count').textContent = rarityCounts.legendary;
 }
 
-// Initialize physics on load (desktop only)
-window.addEventListener('load', () => {
-    if (!isMobile) {
-        setTimeout(initPhysics, 100);
-    }
-});
+// No physics initialization needed
 
 // Panel toggle functionality (desktop only)
 document.addEventListener('DOMContentLoaded', () => {
@@ -520,11 +478,11 @@ function isInteresting(numStr) {
 // Add number to saved list with rarity styling and decay
 function saveNumber(number) {
     // Check limit
-    if (physicsBodies.length >= MAX_NUMBERS) {
+    if (savedNumbersList.length >= MAX_NUMBERS) {
         // Remove oldest
-        const oldest = physicsBodies.shift();
+        const oldest = savedNumbersList.shift();
         if (oldest.element) oldest.element.remove();
-        World.remove(engine.world, oldest.body);
+        if (oldest.decayInterval) clearInterval(oldest.decayInterval);
     }
     
     const numberDiv = document.createElement('div');
@@ -591,50 +549,57 @@ function saveNumber(number) {
         animations.forEach(cls => numberDiv.classList.add(cls));
     }
     
-    // Add to DOM
-    savedNumbersEl.appendChild(numberDiv);
+    // Find correct position to insert based on rarity (sorted by priority)
+    let insertBeforeElement = null;
+    const currentPriority = rarityPriority[rarityTier];
     
-    // Create physics body with accurate sizing
-    const containerWidth = physicsContainer.clientWidth;
-    const startX = Math.random() * (containerWidth - 100) + 50;
-    const startY = -20; // Start above container
+    for (let i = 0; i < savedNumbersList.length; i++) {
+        const existingPriority = rarityPriority[savedNumbersList[i].rarityTier];
+        if (currentPriority > existingPriority) {
+            insertBeforeElement = savedNumbersList[i].element;
+            break;
+        }
+    }
     
-    // Get actual rendered size and make collision box tighter
-    const rect = numberDiv.getBoundingClientRect();
-    const width = (rect.width || 60) * 0.7;  // 70% of visual width
-    const height = (rect.height || 20) * 0.7;  // 70% of visual height
-    
-    const body = Bodies.rectangle(startX, startY, width, height, {
-        restitution: 0.3,
-        friction: 0.8,
-        density: 0.001
-    });
-    
-    World.add(engine.world, body);
-    
-    // Track body and element
-    const physicsObj = { body, element: numberDiv, startTime: Date.now(), rarityTier };
-    physicsBodies.push(physicsObj);
+    // Insert at correct position
+    if (insertBeforeElement) {
+        savedNumbersEl.insertBefore(numberDiv, insertBeforeElement);
+    } else {
+        savedNumbersEl.appendChild(numberDiv);
+    }
     
     // Start decay process
     const decayTime = decayTimes[rarityTier];
+    const startTime = Date.now();
     
     const decayInterval = setInterval(() => {
-        const elapsed = Date.now() - physicsObj.startTime;
+        const elapsed = Date.now() - startTime;
         const progress = elapsed / decayTime;
         
         if (progress >= 1) {
-            // Remove element and physics body
+            // Remove element
             numberDiv.remove();
-            World.remove(engine.world, body);
-            const index = physicsBodies.indexOf(physicsObj);
-            if (index > -1) physicsBodies.splice(index, 1);
+            const index = savedNumbersList.findIndex(obj => obj.element === numberDiv);
+            if (index > -1) savedNumbersList.splice(index, 1);
             clearInterval(decayInterval);
         } else {
             // Fade out: opacity goes from 1 to 0
             numberDiv.style.opacity = 1 - progress;
         }
     }, 100); // Update every 100ms for smooth fade
+    
+    // Track element and insert at correct sorted position
+    const savedObj = { element: numberDiv, startTime, rarityTier, decayInterval };
+    
+    // Find correct position in list
+    let insertIndex = savedNumbersList.length;
+    for (let i = 0; i < savedNumbersList.length; i++) {
+        if (currentPriority > rarityPriority[savedNumbersList[i].rarityTier]) {
+            insertIndex = i;
+            break;
+        }
+    }
+    savedNumbersList.splice(insertIndex, 0, savedObj);
 }
 
 // Export function
@@ -680,20 +645,20 @@ function importData(data) {
         generationSpeed += speedContributions[rarity] * count;
     });
     
-    // Keep existing display and physics - we'll add to them
+    // Keep existing display - we'll add to them
     
     // Filter for rare, epic, or legendary
     const displayNumbers = data.history
         .filter(item => ['rare', 'epic', 'legendary'].includes(item.rarity))
         .slice(-50); // Get last 50
     
-    // Display them with physics but no decay
+    // Display them without decay
     displayNumbers.forEach((item, index) => {
         // Check limit and remove oldest if needed
-        if (physicsBodies.length >= MAX_NUMBERS) {
-            const oldest = physicsBodies.shift();
+        if (savedNumbersList.length >= MAX_NUMBERS) {
+            const oldest = savedNumbersList.shift();
             if (oldest.element) oldest.element.remove();
-            World.remove(engine.world, oldest.body);
+            if (oldest.decayInterval) clearInterval(oldest.decayInterval);
         }
         
         const numberDiv = document.createElement('div');
@@ -729,28 +694,36 @@ function importData(data) {
             animations.forEach(cls => numberDiv.classList.add(cls));
         }
         
-        savedNumbersEl.appendChild(numberDiv);
+        // Find correct position to insert based on rarity (sorted by priority)
+        let insertBeforeElement = null;
+        const currentPriority = rarityPriority[item.rarity];
         
-        // Create physics body with accurate sizing
-        const containerWidth = physicsContainer.clientWidth;
-        const startX = Math.random() * (containerWidth - 100) + 50;
-        const startY = -20 - (index * 5); // Stagger start positions
+        for (let i = 0; i < savedNumbersList.length; i++) {
+            const existingPriority = rarityPriority[savedNumbersList[i].rarityTier];
+            if (currentPriority > existingPriority) {
+                insertBeforeElement = savedNumbersList[i].element;
+                break;
+            }
+        }
         
-        // Get actual rendered size and make collision box tighter
-        const rect = numberDiv.getBoundingClientRect();
-        const width = (rect.width || 60) * 0.7;  // 70% of visual width
-        const height = (rect.height || 20) * 0.7;  // 70% of visual height
+        // Insert at correct position
+        if (insertBeforeElement) {
+            savedNumbersEl.insertBefore(numberDiv, insertBeforeElement);
+        } else {
+            savedNumbersEl.appendChild(numberDiv);
+        }
         
-        const body = Bodies.rectangle(startX, startY, width, height, {
-            restitution: 0.3,
-            friction: 0.8,
-            density: 0.001
-        });
+        // Track element (no decay for imported) and insert at correct sorted position
+        const savedObj = { element: numberDiv, startTime: null, rarityTier: item.rarity, decayInterval: null };
         
-        World.add(engine.world, body);
-        
-        // Track body and element (no decay for imported)
-        physicsBodies.push({ body, element: numberDiv, startTime: null, rarityTier: item.rarity });
+        let insertIndex = savedNumbersList.length;
+        for (let i = 0; i < savedNumbersList.length; i++) {
+            if (currentPriority > rarityPriority[savedNumbersList[i].rarityTier]) {
+                insertIndex = i;
+                break;
+            }
+        }
+        savedNumbersList.splice(insertIndex, 0, savedObj);
     });
     
     // Add imported numbers to history

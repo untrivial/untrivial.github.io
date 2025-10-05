@@ -63,14 +63,11 @@ body {
     flex: 1;
     min-height: 300px;
     max-height: calc(80vh - 200px);
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #physics-canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    pointer-events: none;
     display: none;
 }
 
@@ -188,20 +185,25 @@ body {
 }
 
 .saved-numbers {
-    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.2rem;
     width: 100%;
-    height: 100%;
-    font-size: 0.65rem;
+    font-size: 0.45rem;
     color: #999;
+    padding: 0.2rem;
 }
 
 .saved-number {
-    position: absolute;
     color: #888;
     transition: opacity 0.5s linear;
     white-space: nowrap;
     user-select: none;
     pointer-events: auto;
+    text-align: center;
+    padding: 0.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .saved-number:hover {
@@ -214,10 +216,10 @@ body {
 .effect-underline { text-decoration: underline; }
 .effect-overline { text-decoration: overline; }
 .effect-strikethrough { text-decoration: line-through; }
-.effect-large { font-size: 0.75rem; }
-.effect-xlarge { font-size: 0.85rem; }
-.effect-xxlarge { font-size: 1rem; }
-.effect-small { font-size: 0.6rem; }
+.effect-large { font-size: 0.55rem; }
+.effect-xlarge { font-size: 0.65rem; }
+.effect-xxlarge { font-size: 0.75rem; }
+.effect-small { font-size: 0.4rem; }
 
 /* Color effects */
 .color-blue { color: #4a9eff; }
@@ -242,6 +244,7 @@ body {
 .anim-bounce { animation: bounce-subtle 1s ease-in-out infinite; }
 .anim-wiggle { animation: wiggle 2s ease-in-out infinite; }
 .anim-float { animation: float 3s ease-in-out infinite; }
+.anim-blink { animation: blink-digits 1.5s ease-in-out infinite; }
 
 /* Rainbow gradient */
 .effect-rainbow {
@@ -329,6 +332,12 @@ body {
     0%, 100% { transform: translateY(0px) translateX(0px); }
     33% { transform: translateY(-2px) translateX(2px); }
     66% { transform: translateY(2px) translateX(-2px); }
+}
+
+/* Blink digits */
+@keyframes blink-digits {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
 
 
