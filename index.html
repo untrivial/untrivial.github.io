@@ -8,71 +8,106 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Background elements -->
-    <div class="geometric-bg">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-    
-    <!-- Corner name -->
-    <div class="corner-name">
-        <div class="brand">untrivial</div>
-        <div>Alex Chen</div>
-        <div class="version">v0.0.1</div>
-    </div>
-    
-    <!-- Number generator panel -->
-    <div class="number-panel">
-        <div class="panel-header">
-            <span class="panel-header-text">interesting numbers</span>
-            <span class="panel-toggle">◀</span>
-        </div>
-        <div class="panel-content">
-        <div class="panel-controls">
-            <button class="control-btn" id="export-btn">export</button>
-            <button class="control-btn" id="import-btn">import</button>
-        </div>
-        <div class="rarity-counters">
-            <span class="counter common-counter" id="common-count">0</span>
-            <span class="counter uncommon-counter" id="uncommon-count">0</span>
-            <span class="counter rare-counter" id="rare-count">0</span>
-            <span class="counter epic-counter" id="epic-count">0</span>
-            <span class="counter legendary-counter" id="legendary-count">0</span>
-            <span class="counter mythic-counter" id="mythic-count">0</span>
-        </div>
-        <input type="file" id="import-file" accept=".json" style="display: none;">
-        <div class="generation-rate" id="generation-rate">0/sec</div>
-        <div class="current-number" id="current-number">------</div>
-        <div class="physics-container" id="physics-container">
-            <canvas id="physics-canvas"></canvas>
-            <div class="saved-numbers" id="saved-numbers"></div>
-        </div>
-        </div>
-    </div>
-    
-    <!-- Hero centerpiece -->
-    <section class="hero">
-        <h1 class="quote-main" id="main-quote">All I know is that I know nothing</h1>
-        <p class="attribution">— Socrates</p>
-        <p class="response" id="response-text">But Socrates, I don't even know what it means to know...</p>
-        <div class="scroll-indicator">scroll to reveal ↓</div>
-    </section>
-    
-    <!-- Spacer to allow scroll animation to complete -->
-    <div style="height: 150vh;"></div>
-    
-    <!-- Main content below -->
-    <main class="main-content">
-        <p>Post-training intelligence at xAI (Grok 3, 4, 4 Fast, 4.1).</p>
-        <p>I love making <a href="https://x.com/gork" target="_blank">funny things</a>!</p>
-        <p>Feel free to reach out to me <a href="https://x.com/chentropic" target="_blank">@chentropic</a></p>
-    </main>
+    <div class="container">
+        <div class="header-row">
+            <div class="text-column">
+                <h1 class="title">untrivial</h1>
+                <div class="date-widget" id="date-widget"></div>
+                I don't even know what it means to know.
+                
+                <div class="body-text">
+                    <br><br><br>
+                    <p>Hello, I'm Alex Chen. I'm interested in deep learning, Asia-Pacific foreign policy, and reading good books. You can find me on X at <a href="https://x.com/chenchen">@chenchen</a> and <a href="https://github.com/untrivial">here's</a> my GitHub.</p>
+                    <br>
+                    <p><b>About Me</b></p>
+                    <p>2025: Gap year. Post-training Grok 3, 4, 4 Fast, & 4.1 at xAI. Also made <a href="https://x.com/gork">@gork</a>.</p>
+                    <p>2024: Undergrad-ing at UPenn under the <a href="https://fisher.wharton.upenn.edu/M&T">M&T</a> program.</p>
+                    <br>
 
-    <script src="script.js"></script>
+                    <h1>2025</h1>
+                    <h3>December</h3>
+                    <ul>
+                        <li>📖 Pantsov, <i>Mao: The Real Story</i>
+                            <br>
+                            <p class="body-text-indent"><i>(9/10)</i> My ECCI handler said Stalin thought it was pretty good.</p>
+                        </li>
+
+                        <li>📖 qntm, <i>There Is No Antimemetics Division</i>
+                            <br>
+                            <p class="body-text-indent"><i>(8/10)</i> Did I read this book? I can't seem to remember.</p>
+                        </li>
+
+                        <li>🎙️ Dwarkesh Podcast
+                            <br>
+                            <p class="body-text-indent"><i>(8.5/10)</i> best podcast fr
+                                <br>
+                                Sarah Paine — How Mao conquered China<br>
+                                Ilya Sutskever — Age of research<br>
+                                Victor Shih — Xi Jinping AGI, debt crisis, & Politburo</p>
+                        </li>
+
+                    </ul>
+
+                    <br><br><br>
+                    Yo this website was founded on Dec 31, 2025. It's been <b><span id="days-since-founded" class="body-text-indent" style="display: inline;"></span></b> since then.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        // Date widget
+        function updateDateWidget() {
+            const dateWidget = document.getElementById('date-widget');
+            if (dateWidget) {
+                const now = new Date();
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Los_Angeles',
+                    weekday: 'short',
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+                
+                const parts = formatter.formatToParts(now);
+                const weekday = parts.find(p => p.type === 'weekday').value;
+                const month = parts.find(p => p.type === 'month').value;
+                const day = parts.find(p => p.type === 'day').value;
+                const year = parts.find(p => p.type === 'year').value;
+                
+                dateWidget.innerHTML = `${weekday}, <span class="date-day">${month}</span> <span class="date-day">${day}</span>, ${year}`;
+            }
+        }
+
+        function updateDaysSinceFounded() {
+            const foundedDate = new Date('2025-12-31');
+            const now = new Date();
+            const msPerDay = 1000 * 60 * 60 * 24;
+            const daysSinceFounded = Math.floor((now - foundedDate) / msPerDay);
+
+            let out;
+            if (isNaN(daysSinceFounded) || daysSinceFounded < 0) {
+                out = `${daysSinceFounded} day${Math.abs(daysSinceFounded) === 1 ? '' : 's'} (tf?)`;
+            } else if (daysSinceFounded === 1) {
+                out = "1 day";
+            } else {
+                out = `${daysSinceFounded} days`;
+            }
+
+            document.getElementById('days-since-founded').innerHTML = out;
+        }
+        
+        // Update on page load
+        updateDateWidget();
+        updateDaysSinceFounded();
+
+        // Update every minute to keep it current
+        setInterval(updateDateWidget, 60000);
+        setInterval(updateDaysSinceFounded, 60000);
+    </script>
 </body>
 </html>
