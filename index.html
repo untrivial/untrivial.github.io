@@ -6,61 +6,135 @@
     <title>untrivial</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header-row">
-            <div class="text-column">
-                <h1 class="title">untrivial</h1>
-                <div class="date-widget" id="date-widget"></div>
-                I don't even know what it means to know.<br>
-                <b>v1</b>
-                
-                <div class="body-text">
-                    <br><br><br>
-                    <p>Hello, I'm Alex Chen. I'm interested in deep learning, Asia-Pacific foreign policy, and reading good books. You can find me on X at <a href="https://x.com/chenchen">@chenchen</a> and <a href="https://github.com/untrivial">here's</a> my GitHub.</p>
-                    <br>
-                    <p><b>About Me</b></p>
-                    <p>2025: Gap year. Post-training Grok 3, 4, 4 Fast, & 4.1 at xAI. Also made <a href="https://x.com/gork">@gork</a>.</p>
-                    <p>2024: Undergrad-ing at UPenn under the <a href="https://fisher.wharton.upenn.edu/M&T">M&T</a> program.</p>
-                    <br>
+    <canvas id="bg-canvas"></canvas>
+    
+    <!-- Minimal Sidebar -->
+    <nav class="sidebar">
+        <a href="#" class="nav-item active" data-section="home">Home</a>
+        <a href="#" class="nav-item" data-section="midjourney">Midjourney</a>
+    </nav>
 
-                    <h1>2025</h1>
-                    <h3>December</h3>
-                    <ul>
-                        <li>📖 Pantsov, <i>Mao: The Real Story</i>
-                            <br>
-                            <p class="body-text-indent"><i>(9/10)</i> My ECCI handler said Stalin thought it was pretty good.</p>
-                        </li>
+    <!-- Home Section -->
+    <div class="page-section active" id="home">
+        <div class="container">
+            <div class="header-row">
+                <div class="text-column">
+                    <h1 class="title">untrivial</h1>
+                    <div class="date-widget" id="date-widget"></div>
+                    I don't even know what it means to know.<br>
+                    <b>v1</b>
+                    
+                    <div class="body-text">
+                        <br><br><br>
+                        <p>Hello, I'm Alex Chen. I'm interested in deep learning, Asia-Pacific foreign policy, and reading good books. You can find me on X at <a href="https://x.com/chenchen">@chenchen</a> and <a href="https://github.com/untrivial">here's</a> my GitHub.</p>
+                        <br>
+                        <p><b>About Me</b></p>
+                        <p>2025: Post-training Grok 3, 4, 4 Fast, & 4.1 at xAI. Also made <a href="https://x.com/gork">@gork</a>.</p>
+                        <p>2024: Undergrad-ing at UPenn under the <a href="https://fisher.wharton.upenn.edu/M&T">M&T</a> program.</p>
+                        <br>
 
-                        <li>📖 qntm, <i>There Is No Antimemetics Division</i>
-                            <br>
-                            <p class="body-text-indent"><i>(8/10)</i> Did I read this book? I can't seem to remember.</p>
-                        </li>
-
-                        <li>🎙️ Dwarkesh Podcast
-                            <br>
-                            <p class="body-text-indent"><i>(8.5/10)</i> best podcast fr
+                        <h1>2025</h1>
+                        <h3>December</h3>
+                        <ul>
+                            <li>📖 Pantsov, <i>Mao: The Real Story</i>
                                 <br>
-                                Sarah Paine — How Mao conquered China<br>
-                                Ilya Sutskever — Age of research<br>
-                                Victor Shih — Xi Jinping AGI, debt crisis, & Politburo</p>
-                        </li>
+                                <p class="body-text-indent"><i>(9/10)</i> My ECCI handler said Stalin thought it was pretty good.</p>
+                            </li>
 
-                    </ul>
+                            <li>📖 qntm, <i>There Is No Antimemetics Division</i>
+                                <br>
+                                <p class="body-text-indent"><i>(8/10)</i> Did I read this book? I can't seem to remember.</p>
+                            </li>
 
-                    <br><br><br>
-                    Yo this website was founded on Dec 31, 2025. It's been <b><span id="days-since-founded" class="body-text-indent" style="display: inline;"></span></b> since then.
+                            <li>🎙️ Dwarkesh Podcast
+                                <br>
+                                <p class="body-text-indent"><i>(8.5/10)</i> best podcast fr
+                                    <br>
+                                    Sarah Paine — How Mao conquered China<br>
+                                    Ilya Sutskever — Age of research<br>
+                                    Victor Shih — Xi Jinping AGI, debt crisis, & Politburo</p>
+                            </li>
+
+                        </ul>
+
+                        <br><br><br>
+                        Yo this website was founded on Dec 31, 2025. It's been <b><span id="days-since-founded" class="body-text-indent" style="display: inline;"></span></b> since then.
+                    </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Midjourney Section -->
+    <div class="page-section" id="midjourney">
+        <div class="container container-wide">
+            <h1 class="title">Midjourney Art</h1>
+            
+            <div class="art-grid">
+                <div class="art-item">
+                    <img src="images/midjourney/1.jpg" alt="Midjourney art 1">
+                    <span class="art-title">seraphim angel --sref 4088691234</span>
+                </div>
+                <!-- <div class="art-item">
+                    <img src="images/midjourney/2.jpg" alt="Midjourney art 2">
+                    <span class="art-title">Untitled II</span>
+                </div>
+                <div class="art-item">
+                    <img src="images/midjourney/3.jpg" alt="Midjourney art 3">
+                    <span class="art-title">Untitled III</span>
+                </div>
+                <div class="art-item">
+                    <img src="images/midjourney/4.jpg" alt="Midjourney art 4">
+                    <span class="art-title">Untitled IV</span>
+                </div>
+                <div class="art-item">
+                    <img src="images/midjourney/5.jpg" alt="Midjourney art 5">
+                    <span class="art-title">Untitled V</span>
+                </div>
+                <div class="art-item">
+                    <img src="images/midjourney/6.jpg" alt="Midjourney art 6">
+                    <span class="art-title">Untitled VI</span>
+                </div>
+                <div class="art-item">
+                    <img src="images/midjourney/7.jpg" alt="Midjourney art 7">
+                    <span class="art-title">Untitled VII</span>
+                </div>
+                <div class="art-item">
+                    <img src="images/midjourney/8.jpg" alt="Midjourney art 8">
+                    <span class="art-title">Untitled VIII</span>
+                </div>
+                <div class="art-item">
+                    <img src="images/midjourney/9.jpg" alt="Midjourney art 9">
+                    <span class="art-title">Untitled IX</span>
+                </div> -->
             </div>
         </div>
     </div>
 
     
     <script>
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                const section = item.dataset.section;
+                
+                // Update nav active state
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Show/hide sections
+                document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+            });
+        });
+
         // Date widget
         function updateDateWidget() {
             const dateWidget = document.getElementById('date-widget');
@@ -109,6 +183,179 @@
         // Update every minute to keep it current
         setInterval(updateDateWidget, 60000);
         setInterval(updateDaysSinceFounded, 60000);
+
+        // Three.js Background
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
+
+            // Main group for everything
+            const mainGroup = new THREE.Group();
+            scene.add(mainGroup);
+
+            // Create wireframe sphere
+            const sphereGeometry = new THREE.IcosahedronGeometry(2.5, 2);
+            const sphereMaterial = new THREE.MeshBasicMaterial({
+                color: 0xcccccc,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.2
+            });
+            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+            mainGroup.add(sphere);
+
+            // Inner sphere
+            const innerGeometry = new THREE.IcosahedronGeometry(1.8, 1);
+            const innerMaterial = new THREE.MeshBasicMaterial({
+                color: 0x999999,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.1
+            });
+            const innerSphere = new THREE.Mesh(innerGeometry, innerMaterial);
+            mainGroup.add(innerSphere);
+
+            // Create vectors (arrows) emanating from sphere
+            const vectorGroup = new THREE.Group();
+            mainGroup.add(vectorGroup);
+
+            function createVector(direction, length, color) {
+                const arrowGroup = new THREE.Group();
+                
+                // Line (shaft)
+                const lineMaterial = new THREE.LineBasicMaterial({ 
+                    color: color,
+                    transparent: true,
+                    opacity: 0.35
+                });
+                const points = [
+                    new THREE.Vector3(0, 0, 0),
+                    direction.clone().normalize().multiplyScalar(length)
+                ];
+                const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+                const line = new THREE.Line(lineGeometry, lineMaterial);
+                arrowGroup.add(line);
+
+                // Arrowhead (cone)
+                const coneGeometry = new THREE.ConeGeometry(0.08, 0.25, 6);
+                const coneMaterial = new THREE.MeshBasicMaterial({ 
+                    color: color,
+                    transparent: true,
+                    opacity: 0.4
+                });
+                const cone = new THREE.Mesh(coneGeometry, coneMaterial);
+                
+                // Position and orient the cone
+                const tip = direction.clone().normalize().multiplyScalar(length);
+                cone.position.copy(tip);
+                cone.lookAt(tip.clone().add(direction.normalize()));
+                cone.rotateX(Math.PI / 2);
+                arrowGroup.add(cone);
+
+                return arrowGroup;
+            }
+
+            // Generate vectors in various directions (soft colors)
+            const vectorColors = [0x6a9fd9, 0xd96a6a, 0x6ad9a0, 0xd9b06a, 0xa06ad9, 0xd96aa0];
+            const numVectors = 10;
+            
+            for (let i = 0; i < numVectors; i++) {
+                // Fibonacci sphere distribution for even spacing
+                const phi = Math.acos(1 - 2 * (i + 0.5) / numVectors);
+                const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+                
+                const x = Math.sin(phi) * Math.cos(theta);
+                const y = Math.sin(phi) * Math.sin(theta);
+                const z = Math.cos(phi);
+                
+                const direction = new THREE.Vector3(x, y, z);
+                const length = 2.8 + Math.random() * 1.2;
+                const color = vectorColors[i % vectorColors.length];
+                
+                const vector = createVector(direction, length, color);
+                vector.position.copy(direction.clone().multiplyScalar(2.5));
+                vectorGroup.add(vector);
+            }
+
+            // Add some floating particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 70;
+            const positions = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 15;
+                positions[i + 1] = (Math.random() - 0.5) * 15;
+                positions[i + 2] = (Math.random() - 0.5) * 15;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                color: 0x888888,
+                size: 0.025,
+                transparent: true,
+                opacity: 0.35
+            });
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+
+            // Position camera
+            camera.position.z = 10;
+            camera.position.x = 2.5;
+            camera.position.y = 1;
+
+            // Mouse interaction (reduced)
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+            });
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Smooth camera follow
+                targetX += (mouseX * 0.3 - targetX) * 0.015;
+                targetY += (mouseY * 0.2 - targetY) * 0.015;
+                
+                camera.position.x = 2.5 + targetX;
+                camera.position.y = 1 - targetY;
+                camera.lookAt(0, 0, 0);
+
+                // Rotate main group
+                mainGroup.rotation.y += 0.0015;
+                mainGroup.rotation.x += 0.0005;
+
+                // Counter-rotate inner sphere for depth effect
+                innerSphere.rotation.y -= 0.001;
+                innerSphere.rotation.z += 0.0005;
+
+                // Rotate particles slowly
+                particles.rotation.y += 0.0003;
+                particles.rotation.x += 0.0001;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        })();
     </script>
 </body>
 </html>
