@@ -6,107 +6,79 @@
     <title>untrivial</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">
         Light
     </button>
 
-    <!-- Minimal Sidebar -->
-    <nav class="sidebar">
-        <a href="#" class="nav-item active" data-section="home">Home</a>
-    </nav>
-
-    <!-- Home Section -->
-    <div class="page-section active" id="home">
+    <div class="page">
         <div class="container">
-            <div class="header-row">
-                <div class="text-column">
-                    <div class="dictionary-entry">
-                        <div class="entry-head">
-                            <h1 class="title">untrivial</h1>
-                            <span class="entry-speaker" aria-hidden="true">/ˌʌnˈtrɪviəl/</span>
-                        </div>
-                        <div class="entry-definition">
-                            <span class="definition-index">1.</span>
-                            <div class="definition-body">
-                                <p class="definition-text">Not merely simple, obvious, or throwaway; carrying more depth than it first appears.</p>
-                            </div>
-                        </div>
-
-                    </div>
-                    
-                    <div class="body-text">
-                        <br><br><br>
-                        <p>Hello, I'm Alex Chen. I'm interested in deep learning, Asia-Pacific foreign policy, and reading good books. You can find me on X at <a href="https://x.com/chenchen">@chenchen</a> and <a href="https://github.com/untrivial">here's</a> my GitHub.</p>
-                        <br>
-                        <p><b>About Me</b></p>
-                        <ul>
-                            <li>2025: Post-training Grok 3, 4, 4 Fast, & 4.1 at xAI. Also made <a href="https://x.com/gork">@gork</a>.</li>
-                            <li>2024: Undergrad-ing at UPenn under the <a href="https://fisher.wharton.upenn.edu/M&T">M&T</a> program.</li>
-                        </ul>
-                        <br>
-
-                        <h1>2026</h1>
-                        <h3>March</h3>
-                        <ul>
-                            <li>✍️ <a href="fragility.html" class="story-link">Fragility</a>
-                                <br>
-                                <p class="body-text-indent"><i>A story about the balance of power and what happens when AI tips it.</i></p>
-                            </li>
-                        </ul>
-
-                        <h1>2025</h1>
-                        <h3>December</h3>
-                        <ul>
-                            <li>📖 Pantsov, <i>Mao: The Real Story</i>
-                                <br>
-                                <p class="body-text-indent"><i>(9/10)</i> My ECCI handler said Stalin thought it was pretty good.</p>
-                            </li>
-
-                            <li>📖 qntm, <i>There Is No Antimemetics Division</i>
-                                <br>
-                                <p class="body-text-indent"><i>(8/10)</i> Did I read this book? I can't seem to remember.</p>
-                            </li>
-
-                            <li>🎙️ Dwarkesh Podcast
-                                <br>
-                                <p class="body-text-indent"><i>(8.5/10)</i> best podcast fr
-                                    <br>
-                                    Sarah Paine — How Mao conquered China<br>
-                                    Ilya Sutskever — Age of research<br>
-                                    Victor Shih — Xi Jinping AGI, debt crisis, & Politburo</p>
-                            </li>
-
-                        </ul>
-
-                        <br><br><br>
-                        Yo this website was founded on Dec 31, 2025.
-                    </div>
+            <header class="hero">
+                <h1 class="title">Alex Chen</h1>
+                <div class="tagline-row">
+                    <p class="tagline">prev. xAI, UPenn</p>
+                    <a href="https://x.com/chenchen" class="handle"><span class="handle-icon">𝕏</span> @chenchen</a>
                 </div>
-            </div>
+            </header>
+
+            <p class="intro">I care about technologies that cultivate eudaimonia—Aristotle's word for a virtuous and flourishing life. Sooner or later, AI will reshape our production, perception, society as we know it. Done right, I think it can unlock unimaginable self-determination and human agency.</p>
+
+
+            <section class="section">
+                <h2 class="section-title">Journey</h2>
+                <table class="journey-table">
+                    <tr>
+                        <td class="journey-year-cell">2025</td>
+                        <td class="journey-desc-cell">Post-training Grok 3, 4, 4 Fast, & 4.1 at xAI.<br>Made <a href="https://x.com/gork">@gork</a>.</td>
+                    </tr>
+                    <tr>
+                        <td class="journey-year-cell">2024</td>
+                        <td class="journey-desc-cell">Undergraduate at UPenn under the <a href="https://fisher.wharton.upenn.edu/M&T">M&T</a> program.</td>
+                    </tr>
+                </table>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">My Stuff</h2>
+
+                <div class="stuff-month">
+                    <p class="stuff-date">March 2026</p>
+                    <ul class="entry-list">
+                        <li>
+                            <span class="entry-icon">✍️</span>
+                            <div>
+                                <a href="fragility.html" class="entry-link">Fragility</a>
+                                <p class="entry-desc">A story about the balance of power and what happens when AI tips it.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="stuff-month">
+                    <p class="stuff-date">December 2025</p>
+                    <ul class="entry-list">
+                        <li>
+                            <span class="entry-icon">📖</span>
+                            <div>Pantsov, <em>Mao: The Real Story</em></div>
+                        </li>
+                        <li>
+                            <span class="entry-icon">📖</span>
+                            <div>qntm, <em>There Is No Antimemetics Division</em></div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <p>This website was founded on Dec 31, 2025.</p>
+            </footer>
         </div>
     </div>
 
     <script>
-        // Navigation
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                const section = item.dataset.section;
-                
-                // Update nav active state
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                item.classList.add('active');
-                
-                // Show/hide sections
-                document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-                document.getElementById(section).classList.add('active');
-            });
-        });
-
-        // Theme toggle
         const themeToggle = document.getElementById('theme-toggle');
         const savedTheme = localStorage.getItem('theme');
 
