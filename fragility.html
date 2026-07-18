@@ -3,19 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fragility — untrivial</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=3">
+    <meta name="description" content="Fragility: The New Power Law, by Alex Chen.">
+    <title>Fragility — Alex Chen</title>
+    <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
-    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">
-        Light
-    </button>
-
-    <div class="container">
-        <a href="/" class="back-link">&larr; untrivial</a>
+    <div class="article-shell">
+        <a href="/" class="back-link">&larr; Alex Chen</a>
 
         <article class="longform">
             <h1 class="longform-title">Fragility</h1>
@@ -96,24 +90,5 @@
         </article>
     </div>
 
-    <script>
-        const themeToggle = document.getElementById('theme-toggle');
-        const savedTheme = localStorage.getItem('theme');
-
-        function setTheme(theme) {
-            const isLight = theme === 'light';
-            document.body.classList.toggle('light-mode', isLight);
-            themeToggle.textContent = isLight ? 'Dark' : 'Light';
-            themeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
-            localStorage.setItem('theme', theme);
-        }
-
-        setTheme(savedTheme === 'light' ? 'light' : 'dark');
-
-        themeToggle.addEventListener('click', () => {
-            const nextTheme = document.body.classList.contains('light-mode') ? 'dark' : 'light';
-            setTheme(nextTheme);
-        });
-    </script>
 </body>
 </html>

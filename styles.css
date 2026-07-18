@@ -1,426 +1,316 @@
+:root {
+    --paper: #ffffcc;
+    --ink: #111111;
+    --accent: #990033;
+    --muted: #5f5947;
+    --soft-rule: rgba(153, 0, 51, 0.28);
+}
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
-:root {
-    --bg: #0e1117;
-    --text: #c9d1d9;
-    --text-strong: #e6edf3;
-    --text-muted: #7d8590;
-    --text-faint: #484f58;
-    --accent: #8ab4f8;
-    --border: rgba(255, 255, 255, 0.1);
-    --toggle-bg: rgba(255, 255, 255, 0.06);
-    --toggle-hover: rgba(255, 255, 255, 0.1);
+html {
+    color-scheme: light;
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text);
-    background: var(--bg);
+    margin: 0;
     min-height: 100vh;
-    transition: background 0.3s ease, color 0.3s ease;
-    -webkit-font-smoothing: antialiased;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 17px;
+    line-height: 1.48;
 }
 
-body.light-mode {
-    --bg: #ffffff;
-    --text: #3d4249;
-    --text-strong: #1c2026;
-    --text-muted: #656d76;
-    --text-faint: #afb8c1;
-    --accent: #1a73e8;
-    --border: rgba(0, 0, 0, 0.12);
-    --toggle-bg: rgba(0, 0, 0, 0.04);
-    --toggle-hover: rgba(0, 0, 0, 0.08);
-}
-
-a {
+a:link,
+a:visited {
     color: var(--accent);
     text-decoration: none;
-    transition: opacity 0.15s ease;
 }
 
-a:hover {
-    opacity: 0.8;
+a:hover,
+a:focus-visible {
+    text-decoration: underline;
 }
 
-/* Theme toggle */
-.theme-toggle {
-    position: fixed;
-    top: 24px;
-    right: 24px;
-    z-index: 200;
-    border: 1px solid var(--border);
-    background: var(--toggle-bg);
-    color: var(--text-muted);
-    border-radius: 6px;
-    padding: 6px 12px;
-    font-family: inherit;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
+a:focus-visible {
+    outline: 1px dotted var(--accent);
+    outline-offset: 3px;
+}
+
+.site-shell,
+.article-shell {
+    width: min(900px, calc(100% - 40px));
+    margin: 0 auto;
+}
+
+.site-shell {
+    padding: 32px 0 24px;
+}
+
+.masthead {
+    text-align: center;
+}
+
+.eyebrow {
+    margin: 0 0 2px;
+    color: var(--accent);
+    font-size: 0.76rem;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
 }
 
-.theme-toggle:hover {
-    background: var(--toggle-hover);
-    color: var(--text-strong);
+.masthead h1 {
+    margin: 0;
+    font-size: clamp(3rem, 9vw, 5.25rem);
+    font-weight: normal;
+    line-height: 1;
+    letter-spacing: -0.035em;
 }
 
-/* Layout */
-.container {
+.masthead-links {
+    margin: 12px 0 0;
+    font-size: 0.9rem;
+}
+
+.page-rule {
+    height: 0;
+    margin: 28px 0;
+    border: 0;
+    border-top: 1px solid var(--accent);
+}
+
+.short-rule {
+    width: 18%;
+    min-width: 96px;
+    margin: 34px auto;
+}
+
+.career {
     max-width: 720px;
     margin: 0 auto;
-    padding: 80px 32px 64px;
 }
 
-/* Hero */
-.hero {
-    margin-top: 72px;
-    margin-bottom: 56px;
-}
-
-.title {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 64px;
-    font-weight: 500;
-    line-height: 1.15;
-    letter-spacing: -0.025em;
-    color: var(--text-strong);
-}
-
-.handle {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--accent);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    text-decoration: none;
-}
-
-.handle-icon {
-    color: var(--text-strong);
-    font-size: 18px;
-}
-
-.tagline-row {
-    display: flex;
-    align-items: center;
-    gap: 40px;
-    margin-top: 8px;
-    margin-bottom: 40px;
-}
-
-.tagline {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-}
-
-/* Intro */
-.intro {
-    font-size: 19px;
-    line-height: 1.75;
-    color: var(--text);
-    margin-bottom: 12px;
-}
-
-.social {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 0;
-}
-
-/* Sections */
-.section {
-    margin-top: 72px;
-}
-
-.section-title {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 32px;
-    font-weight: 500;
-    color: var(--text-strong);
-    letter-spacing: -0.015em;
-    margin-bottom: 32px;
-}
-
-.section-subtitle {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-top: -8px;
-    margin-bottom: 16px;
-}
-
-/* Journey table */
-.journey-table {
+.timeline-table {
     width: 100%;
     border-collapse: collapse;
-    border-spacing: 0;
 }
 
-.journey-year-cell {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-muted);
-    letter-spacing: 0.02em;
-    padding: 10px 24px 10px 0;
+.timeline-table th {
+    width: 1%;
+    padding: 9px 24px 9px 0;
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: right;
     vertical-align: top;
     white-space: nowrap;
-    text-align: right;
-    width: 1%;
 }
 
-.journey-desc-cell {
-    font-size: 18px;
-    line-height: 1.7;
-    color: var(--text);
-    padding: 10px 0 10px 24px;
+.timeline-table td {
+    padding: 9px 0 9px 24px;
+    border-left: 1px solid var(--accent);
     vertical-align: top;
-    border-left: 1px solid var(--border);
 }
 
-/* My Stuff */
-.stuff-month {
-    margin-bottom: 32px;
-}
-
-.stuff-month + .stuff-month {
-    padding-top: 24px;
-}
-
-.stuff-date {
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    margin-bottom: 12px;
-}
-
-/* Entry list */
-.entry-list {
-    list-style: none;
-    padding: 0;
-}
-
-.entry-list li {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 6px 0;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.entry-icon {
-    font-size: 14px;
-}
-
-
-.entry-icon {
-    flex-shrink: 0;
-}
-
-.entry-link {
-    font-weight: 500;
-    color: var(--text-strong);
-    border-bottom: 1px solid var(--accent);
-    padding-bottom: 1px;
-    transition: color 0.15s ease;
-}
-
-.entry-link:hover {
-    opacity: 1;
+.credo {
+    max-width: 660px;
+    margin: 34px auto 0;
     color: var(--accent);
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    font-style: italic;
+    text-align: center;
 }
 
-.entry-desc {
-    margin-top: 2px;
-    font-size: 14px;
-    color: var(--text-muted);
+.archive {
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+.archive h2 {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-size: 1.05rem;
+    font-weight: normal;
+    text-align: center;
+}
+
+.interest-list {
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.75;
+}
+
+.item-kind {
+    display: inline-block;
+    min-width: 48px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.item-note {
+    color: var(--muted);
+    font-size: 0.9rem;
     font-style: italic;
 }
 
-/* Footer */
-.footer {
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border);
+cite {
+    font-style: italic;
 }
 
-.footer p {
-    font-size: 13px;
-    color: var(--text-faint);
+.footer-rule {
+    margin-top: 52px;
+    margin-bottom: 12px;
 }
 
-/* Longform (fragility page) */
-.longform {
-    max-width: 620px;
+footer {
+    color: var(--muted);
+    font-size: 0.75rem;
+}
+
+footer p {
+    margin: 2px 0;
+}
+
+/* Long-form story */
+.article-shell {
+    max-width: 720px;
+    padding: 30px 0 64px;
 }
 
 .back-link {
     display: inline-block;
-    margin-bottom: 48px;
-    font-size: 14px;
-    color: var(--text-muted);
-    text-decoration: none;
-    letter-spacing: 0.02em;
-    transition: color 0.15s ease;
-}
-
-.back-link:hover {
-    color: var(--text-strong);
-}
-
-.epigraph {
-    margin: 0 0 40px;
-    padding-left: 20px;
-    border-left: 2px solid var(--accent);
-}
-
-.epigraph p {
-    font-size: 16px;
-    font-style: italic;
-    line-height: 1.65;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-}
-
-.epigraph cite {
-    font-size: 13px;
-    color: var(--text-faint);
-    font-style: normal;
-    letter-spacing: 0.02em;
+    margin-bottom: 38px;
+    font-size: 0.82rem;
 }
 
 .longform-title {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 42px;
-    font-weight: 500;
-    line-height: 1.15;
+    margin: 0;
+    font-size: clamp(2.75rem, 9vw, 4.5rem);
+    font-weight: normal;
+    line-height: 1.05;
     letter-spacing: -0.025em;
-    color: var(--text-strong);
-    margin-bottom: 6px;
+    text-align: center;
 }
 
 .longform-subtitle {
-    font-size: 16px;
-    color: var(--text-muted);
-    font-style: italic;
-    margin-bottom: 40px;
-}
-
-.longform h2 {
-    font-family: Georgia, 'Times New Roman', serif;
-    font-size: 22px;
-    font-weight: 500;
-    margin: 48px 0 16px;
-    color: var(--text-strong);
-}
-
-.longform p {
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 16px;
-}
-
-.longform blockquote {
-    margin: 40px 0;
-    padding-left: 20px;
-    border-left: 2px solid var(--accent);
-}
-
-.longform blockquote p {
-    font-size: 18px;
-    font-style: italic;
-    line-height: 1.6;
-    color: var(--text-strong);
-    margin-bottom: 4px;
-}
-
-.longform blockquote cite {
-    font-size: 13px;
-    color: var(--text-muted);
+    margin: 8px 0 34px;
+    color: var(--accent);
+    font-size: 1rem;
     font-style: normal;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
 }
 
-.longform-divider {
-    width: 48px;
-    height: 1px;
-    background: var(--border);
-    margin: 48px 0;
+.epigraph,
+.longform > blockquote {
+    margin: 32px 0 42px;
+    padding: 18px 34px;
+    border-top: 1px solid var(--accent);
+    border-bottom: 1px solid var(--accent);
+    text-align: center;
+}
+
+.epigraph p,
+.longform > blockquote p {
+    margin: 0 0 5px;
+    color: var(--ink);
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.epigraph cite,
+.longform > blockquote cite {
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-style: normal;
 }
 
 .story-chapter {
-    margin-bottom: 32px;
+    margin-bottom: 30px;
 }
 
 .story-chapter h2 {
-    font-size: 16px;
+    margin: 38px 0 16px;
+    color: var(--accent);
+    font-size: 0.92rem;
+    font-weight: normal;
     letter-spacing: 0.08em;
-    color: var(--text-faint);
-    margin: 48px 0 20px;
+    text-align: center;
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-    .container {
-        padding: 56px 20px 48px;
+.longform p {
+    margin: 0 0 16px;
+}
+
+.story-chapter p {
+    text-align: justify;
+}
+
+.longform-divider {
+    width: 18%;
+    min-width: 90px;
+    height: 0;
+    margin: 42px auto;
+    border-top: 1px solid var(--accent);
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
     }
 
-    .title,
-    .longform-title {
-        font-size: 32px;
+    .site-shell,
+    .article-shell {
+        width: min(100% - 28px, 900px);
     }
 
-    .section-title {
-        font-size: 20px;
+    .site-shell {
+        padding-top: 24px;
     }
 
-    .intro {
-        font-size: 15px;
+    .page-rule {
+        margin: 22px 0;
     }
 
-    .journey-year-cell {
-        font-size: 14px;
-        padding-right: 16px;
+    .timeline-table th {
+        padding-right: 14px;
     }
 
-    .journey-desc-cell {
-        font-size: 14px;
-        padding-left: 16px;
+    .timeline-table td {
+        padding-left: 14px;
     }
 
-    .theme-toggle {
-        top: 16px;
-        right: 16px;
-        padding: 5px 10px;
-        font-size: 11px;
+    .item-kind {
+        display: block;
+        margin-top: 6px;
     }
 
-    .longform h2 {
-        font-size: 20px;
-        margin: 36px 0 12px;
+    .item-kind:first-child {
+        margin-top: 0;
     }
 
-    .longform p {
-        font-size: 15px;
+    .article-shell {
+        padding-top: 20px;
+    }
+
+    .back-link {
+        margin-bottom: 28px;
+    }
+
+    .epigraph,
+    .longform > blockquote {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .story-chapter p {
+        text-align: left;
     }
 }
