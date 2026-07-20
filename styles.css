@@ -89,8 +89,8 @@ a:focus-visible {
 }
 
 .career {
-    max-width: 720px;
-    margin: 0 auto;
+    max-width: 520px;
+    margin: 34px auto 0;
 }
 
 .timeline-table {
@@ -99,8 +99,8 @@ a:focus-visible {
 }
 
 .timeline-table th {
-    width: 1%;
-    padding: 9px 24px 9px 0;
+    width: 58px;
+    padding: 9px 12px 9px 0;
     color: var(--accent);
     font-size: 0.9rem;
     font-weight: bold;
@@ -110,8 +110,7 @@ a:focus-visible {
 }
 
 .timeline-table td {
-    padding: 9px 0 9px 24px;
-    border-left: 1px solid var(--accent);
+    padding: 9px 0 9px 12px;
     vertical-align: top;
 }
 
@@ -119,7 +118,7 @@ a:focus-visible {
     max-width: 660px;
     margin: 34px auto 0;
     color: var(--accent);
-    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    font-size: clamp(1.15rem, 2vw, 1.3rem);
     font-style: italic;
     text-align: center;
 }
@@ -140,16 +139,24 @@ a:focus-visible {
 .interest-list {
     max-width: 520px;
     margin: 0 auto;
+    padding: 0;
     line-height: 1.75;
+    list-style: none;
+}
+
+.interest-list li {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr);
+    gap: 12px;
+    align-items: baseline;
 }
 
 .item-kind {
-    display: inline-block;
-    min-width: 48px;
     color: var(--muted);
     font-size: 0.72rem;
     font-weight: bold;
     letter-spacing: 0.06em;
+    text-align: right;
     text-transform: uppercase;
 }
 
@@ -280,20 +287,17 @@ footer p {
     }
 
     .timeline-table th {
-        padding-right: 14px;
+        width: 52px;
+        padding-right: 10px;
     }
 
     .timeline-table td {
-        padding-left: 14px;
+        padding-left: 10px;
     }
 
-    .item-kind {
-        display: block;
-        margin-top: 6px;
-    }
-
-    .item-kind:first-child {
-        margin-top: 0;
+    .interest-list li {
+        grid-template-columns: 52px minmax(0, 1fr);
+        gap: 10px;
     }
 
     .article-shell {
